@@ -1,6 +1,7 @@
 import 'package:pointycastle/pointycastle.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart';
+import 'package:call_api/generationKey.dart';
 
 String rsaEncrypt(
     String plaintext, RSAPublicKey publicKey, RSAPrivateKey prvKey) {
@@ -8,7 +9,7 @@ String rsaEncrypt(
 
   final encrypted = encrypter.encrypt(plaintext);
   final decrypted = encrypter.decrypt(encrypted);
-  print('encrypted: = $encrypted.base64,decrypted = $decrypted');
+  print('\nencrypted: = ${encrypted.base64},decrypted = $decrypted\n');
   return encrypted.base64;
 }
 
@@ -59,6 +60,13 @@ rUZ+ymn9FqldaNMGqLzW6Ew=
 
   final privateKey = RSAKeyParser().parse(privateKeyString) as RSAPrivateKey;
 
+  final pair = generateRSAkeyPair(exampleSecureRandom());
+  final public = pair.publicKey;
+  final private = pair.privateKey;
+
+  print("\n-------Encrypt with Key gen-------");
+  rsaEncrypt(dataToEncrypt, public, private);
+  print("-------Encrypt with hard code-------");
   final encryptedData = rsaEncrypt(dataToEncrypt, publicKey, privateKey);
 
   // print('Original data: $dataToEncrypt');

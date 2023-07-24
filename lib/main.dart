@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:call_api/request.dart';
 
-void main() {
+void main() async {
+  await decryptAPI();
   runApp(const MyApp());
 }
 
